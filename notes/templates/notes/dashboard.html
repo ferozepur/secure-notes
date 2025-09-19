@@ -1,0 +1,39 @@
+{% extends "notes/base.html" %}
+{% block title %}My Notes{% endblock %}
+{% block content %}
+<div class="card" style="text-align:center; padding:20px; margin-bottom:20px;">
+  <h1 style="margin-bottom:10px; color:#1f2937;">Welcome to Your Notes Dashboard</h1>
+  <p style="font-size:16px; color:#4b5563; margin-bottom:20px;">
+    Manage your notes easily – create, view, and keep everything organized in one place.
+  </p>
+  <a class="btn btn-primary" href="{% url 'notes:note_create' %}"
+     style="font-size:18px; padding:12px 24px; border-radius:8px;">
+    + Create New Note
+  </a>
+</div>
+
+{% if notes %}
+  <h2 style="margin:20px 0; color:#374151;">Your Notes</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px;">
+    {% for note in notes %}
+      <div class="card" style="padding:16px; transition:box-shadow 0.2s; cursor:pointer;">
+        <h3 style="margin:0 0 8px; color:#1f2937;">
+          <a href="{% url 'notes:note_detail' note.pk %}" style="text-decoration:none; color:inherit;">
+            {{ note.title }}
+          </a>
+        </h3>
+        <p style="color:#6b7280; font-size:14px; margin:0 0 8px;">
+          Updated {{ note.updated_at|date:"Y-m-d H:i" }}
+        </p>
+        <p style="font-size:14px; color:#374151; margin:0;">
+          {{ note.content|truncatewords:15 }}
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="card" style="text-align:center; font-style:italic; color:#6b7280; padding:20px;">
+    No notes yet. Create your first one!
+  </div>
+{% endif %}
+{% endblock %}

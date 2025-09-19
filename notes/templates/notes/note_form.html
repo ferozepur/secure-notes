@@ -1,0 +1,26 @@
+{% extends "notes/base.html" %}
+{% block title %}{{ action }} Note{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px; margin:0 auto; padding:24px;">
+  <h1 style="margin-bottom:10px; color:#1f2937;">{{ action }} Note</h1>
+  <p style="font-size:15px; color:#4b5563; margin-bottom:20px;">
+    Use the form below to {{ action|lower }} your note. Make sure to add a clear title and content.
+  </p>
+  
+  <form method="post" style="display:flex; flex-direction:column; gap:16px;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <div style="display:flex; gap:12px; margin-top:12px;">
+      <button class="btn btn-primary" type="submit" 
+              style="font-size:16px; padding:10px 20px; border-radius:6px;">
+        {{ action }}
+      </button>
+      <a class="btn" href="{% url 'notes:dashboard' %}" 
+         style="background-color:#e5e7eb; padding:10px 20px; border-radius:6px; text-decoration:none; color:#374151;">
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}
